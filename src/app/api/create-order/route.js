@@ -5,11 +5,11 @@ import Razorpay from "razorpay"
 
 export async function POST(req){
   await connectDb();
-  const datad=await req.json();
-  // console.log(datad);
-  const {amount,to_username,from_name,message}=datad;
+  const data=await req.json();
+  // console.log(data);
+  const {amount,to_username,from_name,message,rpayID,rpaySecret}=data;
   try {
-    const instance = new Razorpay({ key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, key_secret: process.env.RAZORPAY_KEY_SECRET })
+    const instance = new Razorpay({ key_id: rpayID, key_secret: rpaySecret })
     const options = {
       amount: amount, // req in integer paise
       currency: "INR"

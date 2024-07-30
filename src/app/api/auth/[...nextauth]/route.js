@@ -58,7 +58,7 @@ export const authOptions = NextAuth({
       // console.log("session1",session);
       const dbUser=await User.findOne({email:session.user.email});
       // console.log("dbUser1",dbUser);
-      session.user.username=dbUser.username;
+      session.user=dbUser;
       // console.log("session2",session);
       return session
     },
