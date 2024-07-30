@@ -1,10 +1,12 @@
 "use client"
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
+import axios from 'axios';
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 
 function Page({ params }) {
-  const { data: session } = useSession();
+  // const session = useSession();
+  // console.log(data.user.name);
 
   // if (!session) {
   //   const router = useRouter();
@@ -13,10 +15,65 @@ function Page({ params }) {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-  function handleFormSubmit(data) {
-    console.log(data);
+  const lazyRazorpayScript = async () => {
+    try {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      document.body.appendChild(script);
+    } catch (error) {
+      console.log("Razorpay script load error", error);
+    }
   }
 
+  const fetchOrder = async (data) => {
+    console.log(data);
+    try {
+      const dbRes = await axios.post('/api/create-order', { amount:data.amount,to_username:params.username,message:data.message,from_name:data.username });
+      return dbRes.data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+
+  async function handlePayment(data) {
+    console.log(data);
+    data.amount=Number(data.amount) * 100;
+    console.log(data);
+    try {
+      // load script
+      await lazyRazorpayScript();
+      // create order
+      const order = await fetchOrder(data);
+      console.log(order);
+      // initiate payment
+      const options = {
+        amount: Number(order.amount_due), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+        currency: "INR",
+        name: "Get Me A Chai",
+        description: "Test Transaction",
+        image: "https://media.istockphoto.com/id/1297483389/photo/masala-tea-chai.jpg?s=2048x2048&w=is&k=20&c=PDKzb92QYAOUa6RWZOxT13e-vZ-cZWbIwETq9CeRSm8=",
+        order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        callback_url: "http://localhost:3000/api/razorpay",
+        prefill: {
+          name: "Gaurav Kumar",
+          email: "gaurav.kumar@example.com",
+          contact: "9000090000"
+        },
+        notes: order.notes,
+        theme: {
+          color: "#3399cc"
+        }
+      };
+      console.log(options);
+      const rzpInstance = new window.Razorpay(options);
+      rzpInstance.open();
+    } catch (error) {
+      console.log("handlePayment error", error);
+    }
+  }
 
   return (
     <>
@@ -106,7 +163,7 @@ function Page({ params }) {
 
         <div className="bg-slate-800 p-10 w-1/2 rounded-lg">
           <h1 className="text-2xl font-bold mb-2 text-white ms-1 ">Make Payment</h1>
-          <form onSubmit={handleSubmit(handleFormSubmit)} className="flex flex-col gap-3">
+          <form onSubmit={handleSubmit(handlePayment)} className="flex flex-col gap-3">
             <input type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter name" {...register("username", { required: true })} />
@@ -118,7 +175,7 @@ function Page({ params }) {
               placeholder="Enter Amount" pattern="[0-9]" {...register("amount", { required: true })} />
             <button type="submit" className=" text-lg text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg py-2 text-center  mb-1">
               Pay</button>
-            <div className="flex gap- 2">
+            {/*<div className="flex gap- 2">
               <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                 Pay ₹5
               </button>
@@ -128,7 +185,7 @@ function Page({ params }) {
               <button type="button" className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">
                 Pay ₹20
               </button>
-            </div>
+            </div>*/}
           </form>
         </div>
       </div>

@@ -34,12 +34,12 @@ export const authOptions = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log(user,"-", account,"-", profile,"-", email,"-", credentials);
-      console.log("user", user);
+      // console.log(user,"-", account,"-", profile,"-", email,"-", credentials);
+      // console.log("user", user);
       if(account.provider==="github"){
         await connectDb();  // connect to db and save details
         const currentUser= await User.findOne({email:user.email});
-        console.log("currentUser",currentUser);
+        // console.log("currentUser",currentUser);
         if(!currentUser){
           const newUser=new User({
             email:user.email,
@@ -47,19 +47,19 @@ export const authOptions = NextAuth({
             name:user.name,
             profilePic:user.image
           });
-          console.log("newUser",newUser);
+          // console.log("newUser",newUser);
           await newUser.save();
         }
       }
       return true;
     },
     async session({ session, user, token }) {
-      console.log(user,"-", session,"-", token);
-      console.log("session1",session);
+      // console.log(user,"-", session,"-", token);
+      // console.log("session1",session);
       const dbUser=await User.findOne({email:session.user.email});
-      console.log("dbUser1",dbUser);
+      // console.log("dbUser1",dbUser);
       session.user.username=dbUser.username;
-      console.log("session2",session);
+      // console.log("session2",session);
       return session
     },
   }
