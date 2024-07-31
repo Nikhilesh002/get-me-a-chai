@@ -18,7 +18,6 @@ function PaymentForm({data}) {
   }
 
   const fetchOrder = async (fdata) => {
-    // console.log(fdata);
     try {
       const dbRes = await axios.post('/api/create-order', { amount:fdata.amount,to_username:data.username,message:fdata.message,from_name:fdata.name,rpayID:data.rpayID,rpaySecret:data.rpaySecret });
       return dbRes.data;
@@ -31,13 +30,11 @@ function PaymentForm({data}) {
   async function handlePayment(fdata) {
     setLoading(true);
     fdata.amount=Number(fdata.amount) * 100;
-    // console.log(fdata);
     try {
       // load script
       await lazyRazorpayScript();
       // create order
       const order = await fetchOrder(fdata);
-      console.log(order);
       // initiate payment
       const options = {
         amount: Number(order.amount_due), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -58,7 +55,6 @@ function PaymentForm({data}) {
           color: "#3399cc"
         }
       };
-      console.log(options);
       const rzpInstance = new window.Razorpay(options);
       rzpInstance.open();
     } catch (error) {

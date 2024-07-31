@@ -14,11 +14,9 @@ function Page({ params }) {
     document.title=params?.username+" | Get Me A Chai";
     async function getData(){
       const dbRes=await axios.post(`api/get-user`,{username:params.username});
-      console.log(dbRes);
       if(dbRes.data?.message==="No user found"){
         // notFound();
         router.push('/not-found');
-        console.log("no user found");
       }
       else{
         setData(dbRes.data);
@@ -29,7 +27,6 @@ function Page({ params }) {
 
   function handleData(x){
     setDataFromChild(x);
-    // console.log(x);
   }
 
   return (

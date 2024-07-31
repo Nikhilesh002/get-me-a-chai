@@ -8,7 +8,6 @@ export async function POST(req) {
   await connectDb();
   let data = await req.formData();
   data = Object.fromEntries(data);
-  console.log(data);
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = data;
 
   // check if such order exists
@@ -16,18 +15,15 @@ export async function POST(req) {
   if (!dbRes) {
     return NextResponse.error("Order ID not found");
   }
-  // console.log(dbRes);
 
   // fetch razorpay secret key from db
   const dbRes2=await User.findOne({ username: dbRes.to_user },{ rpaySecret: 1, _id: 0 }).exec();
-  // console.log(dbRes2);
 
   const isVerified = validatePaymentVerification({ "order_id": razorpay_order_id, "payment_id": razorpay_payment_id }, razorpay_signature, dbRes2.rpaySecret);
 
   if (isVerified) {
     // findOne by order and update done to true
     const dbRes3 = await Payment.findOneAndUpdate({oid:razorpay_order_id},{done:true});
-    // console.log(dbRes3);
     return NextResponse.redirect(`http://localhost:3000/${dbRes.to_user}`);
   }
   else {

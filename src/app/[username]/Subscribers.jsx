@@ -11,13 +11,11 @@ function Subscribers({data,sendData}) {
     async function getSubscribers(){
       const dbRes=await axios.post('api/get-subscribers',{to_user:data.username});
       setSubscribers(dbRes.data);
-      console.log(dbRes.data);
       sendData(dbRes.data);
     }
     getSubscribers();
   },[data.username])
   
-  // console.log(subscribers);
   return (
     <div className="flex flex-col gap-2 overflow-y-scroll h-[300px] ">
       {

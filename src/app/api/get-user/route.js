@@ -5,12 +5,10 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   await connectDb();
   const { username } = await req.json();
-  // console.log(username);
   // return NextResponse.json({msg:"test"});
   try {
     // get user data from users table
     const dbRes = await User.findOne({ username });
-    // console.log(dbRes);
     if(dbRes){
       return NextResponse.json(dbRes);
     }

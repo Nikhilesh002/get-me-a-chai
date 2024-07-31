@@ -19,7 +19,6 @@ function Page() {
   const handleSignIn = (client) => {
     return async () => {
       const dbRes=await signIn(client);
-      console.log(dbRes);
     };
   };
 

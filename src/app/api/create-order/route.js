@@ -6,7 +6,6 @@ import Razorpay from "razorpay"
 export async function POST(req){
   await connectDb();
   const data=await req.json();
-  // console.log(data);
   const {amount,to_username,from_name,message,rpayID,rpaySecret}=data;
   try {
     const instance = new Razorpay({ key_id: rpayID, key_secret: rpaySecret })
@@ -18,7 +17,6 @@ export async function POST(req){
 
     // // make payment object in db shows order is pending
     const dbRes=await Payment.create({oid:order.id,amount,to_user:to_username,name:from_name,message,createdAt:Date.now(),updatedAt:Date.now(),done:false});
-    // console.log(dbRes);
     return NextResponse.json(order);
     // return NextResponse.json({msg:"test"});
   } catch (error) {

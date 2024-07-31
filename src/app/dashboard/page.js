@@ -25,9 +25,6 @@ function Page() {
     document.title="Dashboard | Get Me A Chai";
     // async function getData(){
       // const dbRes=await axios.post(`api/get-user`,{username:session?.data?.user?.username});
-      // console.log(session?.data?.user?.username);
-      // console.log(dbRes);
-      // console.log(session);
       if(session.status==="authenticated"){
         setData(session?.data?.user);
       }
@@ -40,11 +37,7 @@ function Page() {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
-    // console.log(data);
-    // delete(data._id);
-    // console.log(data);
     const dbRes=await axios.post(`api/update-user`,data);
-    // console.log(dbRes);
   }
 
   const handleInputChange = (e) => {
