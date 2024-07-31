@@ -3,14 +3,16 @@ import PaymentForm from '@/app/[username]/PaymentForm';
 import Subscribers from '@/app/[username]/Subscribers';
 import {useEffect,useState} from "react";
 import axios from 'axios';
-import { notFound, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '@/components/Loading';
+import { useSession } from 'next-auth/react';
 
 function Page({ params }) {
   const [data, setData]=useState(null);
   const [dataFromChild, setDataFromChild]=useState(null);
   const router=useRouter();
+  const session=useSession();
 
   useEffect(() => {
     document.title=params?.username+" | Get Me A Chai";
@@ -58,8 +60,12 @@ function Page({ params }) {
         </div>
 
         <div className="bg-slate-800 p-10 w-1/2 rounded-lg">
-          <h1 className="text-2xl font-bold mb-2 text-white ms-1 ">Make Payment</h1>
-          <PaymentForm data={data}/>
+          {
+            session?.data?.user.username!==params.username ? <>
+              <h1 className="text-2xl font-bold mb-2 text-white ms-1 ">Make Payment</h1>
+              <PaymentForm data={data}/>
+            </> : <h1 className='text-lg font-mono leading-10 px-10 py-20 text-pretty'>You can raise funds from your fans. You can track all the payments here. Get Me A Chai is a website which make your fund raising convinent and simpler.</h1>
+          }
         </div>
       </div>
     </>
