@@ -24,7 +24,7 @@ export async function POST(req) {
   if (isVerified) {
     // findOne by order and update done to true
     const dbRes3 = await Payment.findOneAndUpdate({oid:razorpay_order_id},{done:true});
-    return NextResponse.redirect(`http://localhost:3000/${dbRes.to_user}`);
+    return NextResponse.redirect(`${process.env.NEXTAUTH_URL+'/'+dbRes.to_user}`);
   }
   else {
     return NextResponse.error("Payment failed");
