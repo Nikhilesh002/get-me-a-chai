@@ -1,9 +1,9 @@
 "use client"
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Link from "next/link";
 
 function Page() {
   const { data: session } = useSession();
@@ -11,14 +11,18 @@ function Page() {
 
   useEffect(() => {
     document.title = "Login | Get Me A Chai";
-  if (session) {
-    router.push('/dashboard');
-  }
+  }, []);
+
+  useEffect(() => {
+    if (session) {
+      router.push('/dashboard');
+    }
   }, [session, router]);
 
   const handleSignIn = (client) => {
     return async () => {
       const dbRes=await signIn(client);
+      console.log(dbRes);
     };
   };
 

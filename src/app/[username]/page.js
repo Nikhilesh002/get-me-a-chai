@@ -4,6 +4,8 @@ import Subscribers from '@/app/[username]/Subscribers';
 import {useEffect,useState} from "react";
 import axios from 'axios';
 import { notFound, useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
+import Loading from '@/components/Loading';
 
 function Page({ params }) {
   const [data, setData]=useState(null);
@@ -16,6 +18,7 @@ function Page({ params }) {
       const dbRes=await axios.post(`api/get-user`,{username:params.username});
       if(dbRes.data?.message==="No user found"){
         // notFound();
+        toast.error('User not found');
         router.push('/not-found');
       }
       else{
@@ -30,7 +33,8 @@ function Page({ params }) {
   }
 
   return (
-    data && <>
+    data===null ? <Loading/> :  <>
+      <Toaster/>
       <div className="cover w-full relative">
         <img className="object-cover w-full h-[50]" src={data.coverPic} width='100%' height={75} alt="background" ></img>
         <div className="absolute -bottom-20 right-[43%] border-white border-2 rounded-xl ">

@@ -4,14 +4,19 @@ import React from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 function Subscribers({data,sendData}) {
   const [subscribers,setSubscribers]=useState([]);
   useEffect(()=>{
     async function getSubscribers(){
-      const dbRes=await axios.post('api/get-subscribers',{to_user:data.username});
-      setSubscribers(dbRes.data);
-      sendData(dbRes.data);
+      try {
+        const dbRes=await axios.post('api/get-subscribers',{to_user:data.username});
+        setSubscribers(dbRes.data);
+        sendData(dbRes.data);
+      } catch (error) {
+        toast.error('Failed to fetch subscribers');
+      }
     }
     getSubscribers();
   },[data.username])
