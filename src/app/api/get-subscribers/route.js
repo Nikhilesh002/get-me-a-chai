@@ -9,7 +9,6 @@ export async function POST(req){
     const dbRes=await Payment.find({to_user,done:true});
     return NextResponse.json(dbRes);
   } catch (error) {
-    console.log("My error:",error);
     return NextResponse.json(error);
   }
 }

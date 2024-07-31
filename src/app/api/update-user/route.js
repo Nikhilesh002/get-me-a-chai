@@ -16,7 +16,6 @@ export async function POST(req) {
       return NextResponse.json({message:"No user found to update"});
     }
   } catch (error) {
-    console.log("My error:", error);
     return NextResponse.json(error);
   }
 }
