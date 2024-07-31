@@ -5,15 +5,17 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-function Subscribers({data}) {
+function Subscribers({data,sendData}) {
   const [subscribers,setSubscribers]=useState([]);
   useEffect(()=>{
     async function getSubscribers(){
       const dbRes=await axios.post('api/get-subscribers',{to_user:data.username});
       setSubscribers(dbRes.data);
+      console.log(dbRes.data);
+      sendData(dbRes.data);
     }
     getSubscribers();
-  },[])
+  },[data.username])
   
   // console.log(subscribers);
   return (

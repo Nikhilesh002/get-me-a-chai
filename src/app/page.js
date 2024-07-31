@@ -13,10 +13,10 @@ function page() {
         </div>
         <p>A Crowd funding platform for creaters. Get your fans and followers. Start now!</p>
         <div className='mt-4 flex gap-4'>
-          <Link href='/' className="text-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg px-4 py-2 text-center me-2 mb-2">
+          <Link href='/login' className="text-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg px-4 py-2 text-center me-2 mb-2">
             Start here
           </Link>
-          <Link href='/' className="text-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg px-4 py-2 text-center me-2 mb-2">
+          <Link href='/about' className="text-md text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg px-4 py-2 text-center me-2 mb-2">
             Read More
           </Link>
         </div>

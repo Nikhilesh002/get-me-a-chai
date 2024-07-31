@@ -1,16 +1,19 @@
 "use client"
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Link from "next/link";
 
 function Page() {
   const { data: session } = useSession();
+  const router = useRouter();
 
-  // useEffect(() => {
-  // if (session) {
-  //   const router = useRouter();
-  //   router.push('/dashboard');
-  // }
-  // }, [session, router]);
+  useEffect(() => {
+  if (session) {
+    router.push('/dashboard');
+  }
+  }, [session, router]);
 
   const handleSignIn = (client) => {
     return async () => {
@@ -25,7 +28,7 @@ function Page() {
         <p>Login to get your fans to support you</p>
       </div>
 
-      <div className="container pb-10">
+      <div className=" pb-10">
         <div className="mx-auto py-2 px-4 w-full max-w-md h-full md:h-auto">
           <div className="bg-white rounded-lg shadow">
             <div className="p-5">
@@ -80,7 +83,7 @@ function Page() {
                 </button>
               </div>
 
-              {/* <div>
+              <div>
               <div className="flex w-full items-center gap-2 py-6 text-sm text-slate-600">
                 <div className="h-px w-full bg-slate-200"></div>
                 OR
@@ -106,10 +109,10 @@ function Page() {
               </form>
 
               <div className="mt-6 text-center text-sm text-slate-600">
-                Don't have an account?
+                Don&apos;t have an account?
                 <Link href="/signup" className="font-medium text-[#4285f4]">Sign up</Link>
               </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

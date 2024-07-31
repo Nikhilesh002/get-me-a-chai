@@ -37,18 +37,23 @@ export const authOptions = NextAuth({
       // console.log(user,"-", account,"-", profile,"-", email,"-", credentials);
       // console.log("user", user);
       if(account.provider==="github"){
-        await connectDb();  // connect to db and save details
-        const currentUser= await User.findOne({email:user.email});
-        // console.log("currentUser",currentUser);
-        if(!currentUser){
-          const newUser=new User({
-            email:user.email,
-            username:user.email.split('@')[0],
-            name:user.name,
-            profilePic:user.image
-          });
-          // console.log("newUser",newUser);
-          await newUser.save();
+        try {
+          await connectDb();  // connect to db and save details
+          const currentUser= await User.findOne({email:user.email});
+          // console.log("currentUser",currentUser);
+          if(!currentUser){
+            const newUser=new User({
+              email:user.email,
+              username:user.email.split('@')[0],
+              name:user.name,
+              profilePic:user.image
+            });
+            // console.log("newUser",newUser);
+            await newUser.save();
+          }
+        } catch (error) {
+          console.log(error);
+          return false;
         }
       }
       return true;
