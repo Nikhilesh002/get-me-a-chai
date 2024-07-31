@@ -56,3 +56,7 @@ function page() {
 }
 
 export default page;
+
+export const metadata = {
+  title: 'Home | Get Me A Chai',
+}

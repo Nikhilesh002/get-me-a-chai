@@ -22,6 +22,7 @@ function Page() {
   // TODO: use toasts to display msgs
 
   useEffect(() => {
+    document.title="Dashboard | Get Me A Chai";
     // async function getData(){
       // const dbRes=await axios.post(`api/get-user`,{username:session?.data?.user?.username});
       // console.log(session?.data?.user?.username);

@@ -10,6 +10,7 @@ function Page() {
   const router = useRouter();
 
   useEffect(() => {
+    document.title = "Login | Get Me A Chai";
   if (session) {
     router.push('/dashboard');
   }
@@ -25,7 +26,7 @@ function Page() {
   return (
     <div className="py-10">
       <div className='text-center font-bold text-white text-3xl pt-4 pb-10 '>
-        <p>Login to get your fans to support you</p>
+        <p>Login to get started</p>
       </div>
 
       <div className=" pb-10">
@@ -37,7 +38,7 @@ function Page() {
 
               <div className="text-center">
                 <p className="mb-3 text-2xl font-semibold leading-5 text-slate-900">
-                  Login to your account
+                  page to your account
                 </p>
               </div>
 

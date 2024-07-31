@@ -1,6 +1,6 @@
 "use client"
-import PaymentForm from '@/components/PaymentForm';
-import Subscribers from '@/components/Subscribers';
+import PaymentForm from '@/app/[username]/PaymentForm';
+import Subscribers from '@/app/[username]/Subscribers';
 import {useEffect,useState} from "react";
 import axios from 'axios';
 import { notFound, useRouter } from 'next/navigation';
@@ -11,6 +11,7 @@ function Page({ params }) {
   const router=useRouter();
 
   useEffect(() => {
+    document.title=params?.username+" | Get Me A Chai";
     async function getData(){
       const dbRes=await axios.post(`api/get-user`,{username:params.username});
       console.log(dbRes);
