@@ -95,14 +95,14 @@ function Page() {
               </div>
               
               <form className="w-full">
-                <label for="email" className="sr-only">Email address</label>
-                <input name="email" type="email" autocomplete="email" required=""
+                <label htmlFor="email" className="sr-only">Email address</label>
+                <input name="email" type="email" required=""
                   className="block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1"
-                  placeholder="Email Address" value="" />
-                <label for="password" className="sr-only">Password</label>
-                <input name="password" type="password" autocomplete="current-password" required=""
+                  placeholder="Email Address" />
+                <label htmlFor="password" className="sr-only">Password</label>
+                <input name="password" type="password" required=""
                   className="mt-2 block w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-black focus:ring-offset-1"
-                  placeholder="Password" value="" />
+                  placeholder="Password" />
                 <p className="mb-3 mt-2 text-sm text-gray-500">
                   <a href="/forgot-password" className="text-blue-800 hover:text-blue-600">Reset your password?</a>
                 </p>

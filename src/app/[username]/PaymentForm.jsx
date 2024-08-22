@@ -45,7 +45,7 @@ function PaymentForm({data}) {
         description: `Donation to ${data.username}`,
         image: `${data.profilePic}`,
         order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        callback_url: "http://localhost:3000/api/razorpay",
+        callback_url: `/api/razorpay`,
         prefill: {
           name: `${fdata.name}`,
           email: "example@example.com",
